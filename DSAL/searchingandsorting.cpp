@@ -18,16 +18,16 @@ using namespace std;
 
 class seit {                                               // Declaring a class
 
-private:
+public:
     int rollno;
     string name;
     float sgpa;
 
 public:
 
-    void getdata(int n, class seit s[])                    // To take the input from the user
+    void getdata(int n, class seit s[],int start)                    // To take the input from the user
     {
-        for (int i = 0; i < n; i++){
+        for (int i = start; i < n; i++){
     bool flag =0; int temp; 
     cout << "Please enter your roll no ";                  // To take input of roll no
     while(!flag){
@@ -331,14 +331,35 @@ bool checks(float a){                                           // Function for 
     if(a>=0&&a<=10) return 1;
     return 0;
 }
+void dataloding(int ro,string na,float sg,class seit s[],int ind){   
+	s[ind].rollno =ro;         
+	s[ind].name = na;                                          // Function to allocate default data
+	s[ind].sgpa = sg;
+}
+void predata(class seit s[]){                                  // Function to insert default data
+	dataloding(1,"Aditya",9,s,0);
+	dataloding(2,"Adwait",9, s,1);
+	dataloding(3,"Ajit",6, s,2);
+	dataloding(4,"Anmol",9, s,3);
+	dataloding(5,"Anway",10, s,4);
+	dataloding(6,"Vedaa",10, s,5);
+	dataloding(7,"Prem",8, s,6);
+	dataloding(8,"Avanti",9.7, s,7);
+	dataloding(9,"Atharva",8, s,8);
+	dataloding(15,"Jaee",10, s,9);
+	dataloding(13,"Rhea",8, s,10);
+	dataloding(12,"Swaraj",10, s,11);
+	dataloding(11,"Rana",9, s,12);
+	dataloding(14,"Shivraj",9.5, s,13);
+	dataloding(10,"Shrusti",10, s,14);
+}
+
 };
 
 int main(){
-cout << "Please enter total number of students " << endl;      // To take total number of students as input
-int n;
-cin>>n;
-seit s[n];
-s[0].getdata(n,s);
+int n =15;
+seit* s = new seit[15];
+s[0].predata(s);
 while(1){
     cout << "Please enter your choice" << endl;
     cout << "1.Display Data" << endl;
@@ -347,7 +368,8 @@ while(1){
     cout << "4.Display first 10 Toppers (Quick Sort)" << endl;
     cout << "5.Search student according to sgpa (Linear Search)" << endl;
     cout << "6.Search student according to Name (Binary Search)" << endl;
-    cout << "7.Exit" << endl;
+    cout << "7.Add a new entry" << endl;
+    cout << "8.Exit" << endl;
     int nn; cin>>nn;                                 // Taking choice as a input to perform an operation
     cout << endl;
     if(nn==1){
@@ -389,6 +411,14 @@ while(1){
         cout << endl;
     }
     else if(nn==7){
+    	n++;
+    	seit* newarr = new seit[n];
+    	copy(s, s + n-1, newarr);
+    	delete[] s;
+    	s=newarr;
+    	s[0].getdata(n,s,n-1);
+    }
+    else if(nn==8){
         break;
     }
     else{
