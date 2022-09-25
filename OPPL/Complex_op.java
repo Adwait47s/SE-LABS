@@ -1,16 +1,16 @@
-
 import java.util.Scanner;
 
-
-
 public class Complex_op{
+    
     public static void main(String[] args){
+        
         class complex_op{
             float real,imaginary;
             complex_op(float C1,float C2){
                 this.real = C1;
                 this.imaginary =C2;
             }
+            
             private void prefection(float a, float b) {
                 if(a>0&&b>0){
                     System.out.println(a+" "+"+"+b+"i");
@@ -47,9 +47,7 @@ public class Complex_op{
                 }
                 System.out.println("_");
             }
-
-
-
+            
             void sub(complex_op C1, complex_op C2){
                 float reall,imaginaryy;
                 reall = C1.real -C2.real;
@@ -65,6 +63,7 @@ public class Complex_op{
                 }
                 System.out.println("_");
             }
+            
             void multiplication(complex_op C1, complex_op C2){
                 float reall,imaginary;
                 reall = C1.real*C2.real - C1.imaginary* C2.imaginary;
@@ -80,6 +79,7 @@ public class Complex_op{
                 }
                 System.out.println("_");
             }
+            
             void division(complex_op C1, complex_op C2){
                 float reall,imaginary;
                 reall = (C1.real*C2.real + C1.imaginary*C2.imaginary)/ (C2.real*C2.real + C2.imaginary*C2.imaginary);
@@ -95,9 +95,8 @@ public class Complex_op{
                 }
                 System.out.println("_");
             }
-
-
         }
+        
         Scanner S = new Scanner(System.in);
         System.out.print("Please enter real part of first complex number ");
         float a,b,c,d;
@@ -114,7 +113,9 @@ public class Complex_op{
             System.out.print("_");
         }
         System.out.println("_");
+        
         int choice;
+        
         while(true){
             System.out.println("Please select the operation");
             System.out.println("1.Addition");
