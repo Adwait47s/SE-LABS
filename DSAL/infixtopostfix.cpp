@@ -10,15 +10,15 @@ int main(){
     cout << endl;
     cout << "Postfix Expression: ";
     for(int i=0;i<s.size();i++){
-        if(s[i]>=97){
-            cout << s[i];
+        if(s[i]>=48){                                     // Ascii value of zero is 48. Hence to differtiate between operators and variables we do this comparison
+            cout << s[i];                                 // If it is a varialbe then we just print it
         }
         else{
             if(ss.empty()){
                 ss.push(s[i]);
             }
             else{
-                if(s[i]=='('){
+                if(s[i]=='('){                           
                     ss.push(s[i]);
                 }
                 else if(s[i]==')'){
