@@ -1,6 +1,6 @@
 import java.util.Scanner;
 interface Vehical{
-    void speedup();
+    void speedup(int a);
     void changegear(int a);
     void applybreaks();
 }
@@ -11,10 +11,23 @@ class Bike implements Vehical{
         this.gear = g;
         currgear =0;
     }
-    public void speedup(){
-        speed +=10;
-        System.out.println("Speed of the bike is increased by 10 km/hr");
-        System.out.println("Current Speed : " +speed+" km/hr");
+    public void speedup(int a){
+        if(a==1){
+            speed +=10;
+            System.out.println("Speed of the bike is increased by 10 km/hr");
+            System.out.println("Current Speed : " +speed+" km/hr");
+        }
+        else if(a==2){
+            if(speed<10){
+                speed=0;
+            }
+            else{
+                speed-=10;
+            }
+            System.out.println("Speed of the bike is decrease by 10 km/hr");
+            System.out.println("Current Speed : " +speed+" km/hr");
+        }
+
     }
     public void changegear(int a){
         if(a==1){
@@ -53,10 +66,22 @@ class Car implements Vehical{
         this.gear = g;
         currgear =0;
     }
-    public void speedup(){
-        speed +=20;
-        System.out.println("Speed of the Car is increased by 20 km/hr");
-        System.out.println("Current Speed : " +speed+" km/hr");
+    public void speedup(int a){
+        if(a==1){
+            speed +=20;
+            System.out.println("Speed of the car is increased by 20 km/hr");
+            System.out.println("Current Speed : " +speed+" km/hr");
+        }
+        else if(a==2){
+            if(speed<20){
+                speed=0;
+            }
+            else{
+                speed-=20;
+            }
+            System.out.println("Speed of the Car is decrease by 20 km/hr");
+            System.out.println("Current Speed : " +speed+" km/hr");
+        }
     }
     public void changegear(int a) {
         if (a == 1) {
@@ -94,10 +119,22 @@ class Bicycle implements Vehical{
         this.gear = g;
         currgear =0;
     }
-    public void speedup(){
-        speed +=5;
-        System.out.println("Speed of the Car is increased by 5 km/hr");
-        System.out.println("Current Speed : " +speed+" km/hr");
+    public void speedup(int a){
+        if(a==1){
+            speed +=5;
+            System.out.println("Speed of the Bicycle is increased by 5 km/hr");
+            System.out.println("Current Speed : " +speed+" km/hr");
+        }
+        else if(a==2){
+            if(speed<5){
+                speed=0;
+            }
+            else{
+                speed-=5;
+            }
+            System.out.println("Speed of the Bicycle is decrease by 5 km/hr");
+            System.out.println("Current Speed : " +speed+" km/hr");
+        }
     }
     public void changegear(int a) {
         if (a == 1) {
@@ -151,7 +188,10 @@ public class vehicle {
                     System.out.println("4.Exit");
                     int chh = s.nextInt();
                     if(chh==1){
-                        b.speedup();
+                        System.out.println("1.Increase Speed");
+                        System.out.println("2.Decrease Speed");
+                        int c= s.nextInt();
+                        b.speedup(c);
                     }
                     else if(chh==2){
                         System.out.println("You want to increase or decrease gear?");
@@ -184,13 +224,16 @@ public class vehicle {
                 int gear = s.nextInt();
                 Car b = new Car(speed,gear);
                 while(true){
-                    System.out.println("1.Increase Speed");
+                    System.out.println("1.Change Speed");
                     System.out.println("2.Change Gear");
                     System.out.println("3.Apply Brakes");
                     System.out.println("4.Exit");
                     int chh = s.nextInt();
                     if(chh==1){
-                        b.speedup();
+                        System.out.println("1.Increase Speed");
+                        System.out.println("2.Decrease Speed");
+                        int c= s.nextInt();
+                        b.speedup(c);
                     }
                     else if(chh==2){
                         System.out.println("You want to increase or decrease gear?");
@@ -229,7 +272,10 @@ public class vehicle {
                     System.out.println("4.Exit");
                     int chh = s.nextInt();
                     if(chh==1){
-                        b.speedup();
+                        System.out.println("1.Increase Speed");
+                        System.out.println("2.Decrease Speed");
+                        int c= s.nextInt();
+                        b.speedup(c);
                     }
                     else if(chh==2){
                         System.out.println("You want to increase or decrease gear?");
