@@ -1,20 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 int main(){
-    cout << "This code only works for one digit numbers" << endl;
     cout << endl;
-    cout << "Please enter postfix expression : ";
+    cout << "Please enter postfix expression in the form of variables : ";
     string s; cin>>s;
+    map<char,double>m;
+    for(int i=0;i<s.size();i++){
+        if(s[i]>=65){
+            m[s[i]] = 0;
+        }
+    }
+    cout << "Please enter values for variables" << endl;
+    for(auto it:m){
+        cout << it.first << " = ";
+        double a; cin>>a;
+        m[it.first] = a;
+    }
     stack<double>ss;
     for(int i=0;i<s.size();i++){
-        if(s[i]>=48){
-            string news(1,s[i]);
-            int add = stoi(news);
-            ss.push(add);
+        if(s[i]>=65){
+            ss.push(m[s[i]]);
         }
         else{
-            double first,second,newadd;
-            char expression;
+            double first,second,newadd,value1,value2;
+            char expression,v1,v2;
             second = ss.top();
             ss.pop();
             first = ss.top();
@@ -37,11 +46,6 @@ int main(){
     }
     cout << endl;
     cout << "Value of postfix expression : ";
-    while(!ss.empty()){
-        cout << ss.top();
-        ss.pop();
-    }
+    cout << ss.top()<< endl;
     cout << endl;
-    cout << endl;
-
 }
