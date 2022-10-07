@@ -56,16 +56,14 @@ public class exception{
         try{
              a =  Integer.parseInt(ss);
              b =  Integer.parseInt(sss);
-             try{
-                 result = a/b;
-                 System.out.println("Division is : "+result);
-             }
-             catch (Exception Arithmatic){
-                 System.out.println("Division by zero is not allowed");
-             }
+             result = a/b;
+            System.out.println("Division is : " +result);
         }
-        catch(Exception NumberFormatException ){
-            System.out.println("Please enter integer value");
+        catch( ArithmeticException d ){
+            System.out.println(d);
+        }
+        catch (NumberFormatException d){
+            System.out.println(d);
         }
     }
 }
