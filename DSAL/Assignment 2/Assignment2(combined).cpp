@@ -1,5 +1,3 @@
-// Note: This code is without any validations, that means if you give wrong postfix or prefix expression it will throw segmentation fault error 
-// Validations are in progress...
 #include <bits/stdc++.h>
 using namespace std;
 class conversion{
@@ -133,8 +131,8 @@ void infixtoprefix(string s){
     cout << endl;
 }
 
-void postfixevaluation(){
-    cout << "Please enter postfix expression in the form of variables : ";
+bool postfixevaluation(){
+    cout << "Please enter postfix expression: ";
     string s; cin>>s;
     map<char,double>m;
     for(int i=0;i<s.size();i++){
@@ -150,14 +148,22 @@ void postfixevaluation(){
     }
     stack<double>ss;
     for(int i=0;i<s.size();i++){
-        if(s[i]>=65){
+        if(s[i]>=48){
             ss.push(m[s[i]]);
         }
         else{
             double first,second,newadd;
             char expression,v1,v2;
+            if(ss.empty()){
+                cout << "Please enter valid postfix expression" << endl;
+                return 1;
+            }
             second = ss.top();
             ss.pop();
+            if(ss.empty()){
+                cout << "Please enter valid postfix expression" << endl;
+                return 1;
+            }
             first = ss.top();
             ss.pop();
             expression = s[i];
@@ -176,17 +182,22 @@ void postfixevaluation(){
             ss.push(newadd);
         }
     }
+    if(ss.size()>1){
+        cout << "Please enter valid postfix expression" << endl;
+        return 1;
+    }
     cout << endl;
     cout << "Value of postfix expression : ";
     cout << ss.top()<< endl;
     cout << endl;
+    return 0;
 }
-void prefixevalution(){
-    cout << "Please enter prefix expression in the form of variables : ";
+bool prefixevalution(){
+    cout << "Please enter prefix expression : ";
     string s; cin>>s;
     map<char,double>m;
     for(int i=0;i<s.size();i++){
-        if(s[i]>=65){
+        if(s[i]>=48){
             m[s[i]] = 0;
         }
     }
@@ -198,14 +209,22 @@ void prefixevalution(){
     }
     stack<double>ss;
     for(int i=s.size()-1;i>=0;i--){
-        if(s[i]>=65){
+        if(s[i]>=48){
             ss.push(m[s[i]]);
         }
         else{
             double first,second,newadd,value1,value2;
             char expression,v1,v2;
+            if(ss.empty()){
+                cout << "Please enter valid prefix expression" << endl;
+                return 1;
+            }
             second = ss.top();
             ss.pop();
+            if(ss.empty()){
+                cout << "Please enter valid prefix expression" << endl;
+                return 1;
+            }
             first = ss.top();
             ss.pop();
             expression = s[i];
@@ -225,9 +244,27 @@ void prefixevalution(){
         }
     }
     cout << endl;
+    if(ss.size()>1){
+        cout << "Please enter valid prefix expression" << endl;
+        return 1;
+    }
     cout << "Value of prefix expression : ";
     cout << ss.top()<< endl;
     cout << endl;
+    return 0;
+}
+bool checkinfix(string s){
+    for(int i=0;i<s.size()-1;i++){
+        if(s[i]<48 && s[i+1]<48&&s[i]!='('&&s[i+1]!=')'&&s[i]!=')'&&s[i+1]!='('){
+            cout << "This is not a valid infix expression";
+            return 1;
+        }
+        else if(s[i]>=48&&s[i+1]>=48){
+            cout << "This is not a valid infix expression";
+            return 1;
+        }
+    }
+    return 0;
 }
 };
 int main(){
@@ -245,14 +282,19 @@ int main(){
         if(ch==1){
             cout << "Please enter your expression : ";
             string s; cin>>s;
+            while(sh.checkinfix(s)){
+                cout << endl; cout << endl;
+                cout << "Please enter a valid infix expression :";
+                cin>>s;
+            }
             sh.infixtopostfix(s);
             sh.infixtoprefix(s);
         }
         else if(ch==2){
-            sh.postfixevaluation();
+            while(sh.postfixevaluation()){};
         }
         else if(ch==3){
-            sh.prefixevalution();
+            while(sh.prefixevalution()){};
         }
         else if(ch==4){
             cout << "Exiting the code..." << endl;
