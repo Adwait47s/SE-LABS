@@ -280,7 +280,7 @@ int main(){
         int ch; cin>>ch;
         conversion sh;
         if(ch==1){
-            cout << "Please enter your expression : ";
+            cout << "Please enter your infix expression (without spaces) : ";
             string s; cin>>s;
             while(sh.checkinfix(s)){
                 cout << endl; cout << endl;
