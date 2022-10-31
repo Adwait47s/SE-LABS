@@ -52,7 +52,19 @@ public:
     void postordernonrecursive(node *root){
         stack<node *>s;
         s.push(root);
-        
+        while (!s.empty()) {
+        node * current_node = s.top();
+        if (current_node->left) {
+            s.push(current_node ->left);
+            current_node -> left = NULL;
+        } else if (current_node-> right) {
+            s.push(current_node -> right);
+            current_node -> right = NULL;
+        } else {
+            cout << current_node->data;
+            s.pop();
+        }
+    }
     }
     void preorder(node *root){
         if(root==NULL) return;
@@ -109,6 +121,10 @@ int main(){
     cout << endl;
     cout << "Preorder expression (non-recursive way) : ";
     call.preordernonrecursive(tree.top());
+    cout << endl;
+    cout << endl;
+    cout << "Postorder expression (non-recursive way) : ";
+    call.postordernonrecursive(tree.top());
     cout << endl;
     cout << endl;
 }
