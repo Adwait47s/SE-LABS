@@ -291,10 +291,10 @@ int main(){
             sh.infixtoprefix(s);
         }
         else if(ch==2){
-            while(sh.postfixevaluation()){};
+            sh.postfixevaluation();
         }
         else if(ch==3){
-            while(sh.prefixevalution()){};
+            sh.prefixevalution();
         }
         else if(ch==4){
             cout << "Exiting the code..." << endl;
