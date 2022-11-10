@@ -46,6 +46,31 @@ public:
         }
 
     }
+
+    node* delete(node *root,unordered_set<int>&s){
+        if(root==NULL){
+            cout << "Tree doesn't exist " << endl;
+            return root;
+        }
+        cout << "Please enter the data you want to delete : ";
+        int key; cin>>key;
+        if(s.count(key)){
+            s.erase(key);
+            node *curr = root;
+            while(curr->data!=key){
+                if(key->curr->data){
+                    curr=  curr->rightc;
+                }
+                else{
+                    curr= curr->leftc;
+                }
+            }
+        } 
+        else{
+            cout << "The key is not present in the tree" << endl;
+        }
+    }
+
     void preorder(node *root){
         if(root==NULL) return;
         cout <<root->data << " ";
@@ -104,7 +129,10 @@ int main(){
     cout << "Please select a choice : " ;
     int ch; cin>>ch;
     if(ch==1){
-        call.insert(root,s);
+        root = call.insert(root,s);
+    }
+    else if(ch==2){
+        root = call.delete(root,s);
     }
     else if(ch==3){
         cout << "Please enter the element you want to search : ";
