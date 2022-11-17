@@ -44,7 +44,7 @@ public:
             }
             
         }
-
+        return root;
     }
 
     node* deletee(node *root,unordered_set<int>&s){
@@ -57,13 +57,13 @@ public:
         if(s.count(key)){
             s.erase(key);
             if (root->data == key) {
-                return BringRightNode(root);
+                return BringCorrectNode(root);
             }
             node *dummy = root;
             while (root != NULL) {
                 if (root->data > key) {
                     if (root->leftc != NULL && root->leftc->data == key) {
-                        root->leftc = BringRightNode(root->leftc);
+                        root->leftc = BringCorrectNode(root->leftc);
                         break;
                     } 
                     else {
@@ -72,7 +72,7 @@ public:
                 } 
                 else {
                     if (root->rightc != NULL && root->rightc->data == key) {
-                        root->rightc = BringRightNode(root->rightc);
+                        root->rightc = BringCorrectNode(root->rightc);
                         break;
                     } 
                     else{
@@ -84,11 +84,12 @@ public:
         }
         else{
             cout << "The key is not present in the tree" << endl;
+            return root;
         }
         
     } 
     
-    node* BringRightNode(node* root) {
+    node* BringCorrectNode(node* root) {
         if (root->leftc == NULL) 
         {
             return root->rightc;
@@ -124,17 +125,14 @@ public:
         return godeep(root->rightc);
     }
 
-    node* mirror(node *root,node *mirrorroot){
-        mirrorroot->data=root->data;
-        if(root->leftc!=NULL&&root->rightc!=NULL){
-            mirrorroot->leftc = root->rightc;
-            mirror(root->rightc,mirrorroot->leftc);
-            mirrorroot->rightc = root->leftc;
-            mirror(root->leftc,mirrorroot->rightc);
-        }
-        else{
-            return mirrorroot;
-        }
+    node* mirror(node *root){
+        if(root==NULL) return NULL;
+        node *temp = new node(root->data);
+        
+        temp->leftc = mirror(root->rightc);
+        temp->rightc=mirror(root->leftc);
+        
+        return temp;
     }
 
     void leafnode(node *root){
@@ -154,6 +152,29 @@ public:
         copyroot->leftc = createcopy(root->leftc);
         copyroot->rightc = createcopy(root->rightc);
         return copyroot;
+    }
+
+    void parentchild(node *root){
+        if(root==NULL){
+            return;
+        }
+        parentchild(root->leftc);
+        cout << "Parent : " << root->data << endl;
+        int leftdata,rightdata;
+        if(root->leftc==NULL){
+            leftdata= -1;
+        }
+        else{
+            leftdata=root->leftc->data;
+        }
+        if(root->rightc==NULL){
+            rightdata = -1;
+        }
+        else{
+            rightdata =root->rightc->data ;
+        }
+        cout << "Left child : " << leftdata << " " << "Right child : " << rightdata << endl;
+        parentchild(root->rightc);
     }
 
     void preorder(node *root){
@@ -250,10 +271,8 @@ int main(){
             cout << "The depth of the tree is "<<call.depth(root) << endl;
         }
         else if(ch==6){
-            cout << "Work in progress!!, will be completed by tommorow!" << endl;
-            cout << "If you have completed this part then make a pull request !" << endl;
-            node *mirrorroot = new node(root->data);
-            mirrorroot= call.mirror(root,mirrorroot);
+            node *mirrorroot = new node();
+            mirrorroot= call.mirror(root);
             cout << "Inorder traversal : ";
             call.inorder(mirrorroot);
             cout << endl;
@@ -263,22 +282,23 @@ int main(){
             cout << "Postorder traversal : " ;
             call.postorder(mirrorroot);
             cout << endl;
+            call.parentchild(mirrorroot);
         }
         else if(ch==7){
             node *copyroot = new node(root->data);
             copyroot = call.createcopy(root);
-            cout << "Inorder traversal : ";
+            cout << "Inorder traversal of copyroot : ";
             call.inorder(copyroot);
             cout << endl;
-            cout << "Preorder traversal : " ;
+            cout << "Preorder traversal of copyroot : " ;
             call.preorder(copyroot);
             cout << endl;
-            cout << "Postorder traversal : " ;
+            cout << "Postorder traversal of copyroot : " ;
             call.postorder(copyroot);
             cout << endl;
         }
         else if(ch==8){
-            cout << "Work in progress !!" << endl;
+            call.parentchild(root);
         }
         else if(ch==9){
             call.leafnode(root);
