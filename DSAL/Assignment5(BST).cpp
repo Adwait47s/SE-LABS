@@ -137,6 +137,25 @@ public:
         }
     }
 
+    void leafnode(node *root){
+        if(root->leftc==NULL&&root->rightc==NULL){
+            cout << root->data << " ";
+        }
+        if(root==NULL) return;
+        inorder(root->leftc);
+        cout << root->data << " " ;
+        inorder(root->rightc);
+    }
+
+    node *createcopy(node *root){
+        if(root==NULL) return NULL;
+        node *copyroot = new node;
+        copyroot->data = root->data;
+        copyroot->leftc = createcopy(root->leftc);
+        copyroot->rightc = createcopy(root->rightc);
+        return copyroot;
+    }
+
     void preorder(node *root){
         if(root==NULL) return;
         cout <<root->data << " ";
@@ -193,7 +212,11 @@ int main(){
         cout << "4.Display tree (Traversal)" << endl;
         cout << "5.Display - Depth of tree" << endl;
         cout << "6.Display - Mirror image" << endl;
-        cout << "7.Exit" << endl;
+        cout << "7.Create a copy" << endl;
+        cout << "8.Display all child nodes with their parent nodes" << endl;
+        cout << "9.Display all leaf nodes" << endl;
+        cout << "10.Display tree levelwise" << endl;
+        cout << "11.Exit" << endl;
         cout << "Please select a choice : " ;
         int ch; cin>>ch;
         if(ch==1){
@@ -242,6 +265,25 @@ int main(){
             cout << endl;
         }
         else if(ch==7){
+            node *copyroot = new node(root->data);
+            copyroot = call.createcopy(root);
+            cout << "Inorder traversal : ";
+            call.inorder(copyroot);
+            cout << endl;
+            cout << "Preorder traversal : " ;
+            call.preorder(copyroot);
+            cout << endl;
+            cout << "Postorder traversal : " ;
+            call.postorder(copyroot);
+            cout << endl;
+        }
+        else if(ch==9){
+            call.leafnode(root);
+            cout << endl;
+        }
+        else if(ch==10){
+        }
+        else if(ch==11){
             cout << "Exiting the code... " << endl;
             break;
         }
