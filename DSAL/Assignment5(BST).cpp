@@ -138,13 +138,13 @@ public:
     }
 
     void leafnode(node *root){
+        
+        if(root==NULL) return;
+        leafnode(root->leftc);
         if(root->leftc==NULL&&root->rightc==NULL){
             cout << root->data << " ";
         }
-        if(root==NULL) return;
-        inorder(root->leftc);
-        cout << root->data << " " ;
-        inorder(root->rightc);
+        leafnode(root->rightc);
     }
 
     node *createcopy(node *root){
@@ -277,11 +277,15 @@ int main(){
             call.postorder(copyroot);
             cout << endl;
         }
+        else if(ch==8){
+            cout << "Work in progress !!" << endl;
+        }
         else if(ch==9){
             call.leafnode(root);
             cout << endl;
         }
         else if(ch==10){
+            cout << "Work in progress !!" << endl;
         }
         else if(ch==11){
             cout << "Exiting the code... " << endl;
