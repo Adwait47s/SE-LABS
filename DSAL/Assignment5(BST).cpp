@@ -136,7 +136,6 @@ public:
     }
 
     void leafnode(node *root){
-        
         if(root==NULL) return;
         leafnode(root->leftc);
         if(root->leftc==NULL&&root->rightc==NULL){
@@ -175,6 +174,30 @@ public:
         }
         cout << "Left child : " << leftdata << " " << "Right child : " << rightdata << endl;
         parentchild(root->rightc);
+    }
+
+    void levelwise(node *root){
+        if(root==NULL){
+            cout << "The tree is empty!" << endl;
+            return;
+        }
+        queue<node *>q;
+        q.push(root);
+        cout << "Levelwise traversal :-" << endl;
+        while(!q.empty()){
+            int size = q.size();
+            while(size--){
+                cout << q.front()->data << " ";
+                if(q.front()->leftc!=NULL){
+                    q.push(q.front()->leftc);
+                }
+                if(q.front()->rightc!=NULL){
+                    q.push(q.front()->rightc);
+                }
+                q.pop();
+            }
+            cout << endl;
+        }
     }
 
     void preorder(node *root){
@@ -240,6 +263,7 @@ int main(){
         cout << "11.Exit" << endl;
         cout << "Please select a choice : " ;
         int ch; cin>>ch;
+        cout << endl;
         if(ch==1){
             root = call.insert(root,s);
         }
@@ -301,11 +325,12 @@ int main(){
             call.parentchild(root);
         }
         else if(ch==9){
+            cout << "Leaf nodes :-" << endl;
             call.leafnode(root);
             cout << endl;
         }
         else if(ch==10){
-            cout << "Work in progress !!" << endl;
+            call.levelwise(root);
         }
         else if(ch==11){
             cout << "Exiting the code... " << endl;
@@ -314,5 +339,6 @@ int main(){
         else{
             cout << "Please enter correct choice " << endl;
         }
+        cout << endl;
     }
 }
