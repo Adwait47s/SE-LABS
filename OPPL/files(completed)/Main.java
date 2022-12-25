@@ -1,204 +1,180 @@
 import java.io.*;
-import java.util.*;
-import java.io.File;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
-public class Main{
-    public float marks;
-    static BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-    public void addRecords(String namee) throws IOException{
-        PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(namee,true)));
-        String studentname,address;
-        int rollno,div;
-        boolean addMore;
-        String s;
-        do{
-            System.out.println("Enter Student's Name : ");
-            studentname=br.readLine();
-            System.out.println("Enter Student's Roll No : ");
-            rollno=Integer.parseInt(br.readLine());
-            System.out.println("Enter Student's Address : ");
-            address=br.readLine();
-            System.out.println("Enter Student's Division : ");
-            div=Integer.parseInt(br.readLine());
-            System.out.println("Enter Student's Marks : ");
-            marks=Float.parseFloat(br.readLine());
-            pw.println(studentname+" "+rollno+" "+address+" "+div+" "+marks);
-            System.out.println("Records Added Successfully !\nDo you want to add more records ? (y/n)");
-            s=br.readLine();
-            if(s.equalsIgnoreCase("y")){
-                addMore=true;
-                System.out.println();
-            }
-            else
-                addMore=false;
-        }
-        while(addMore);
-        pw.close();
-        showMenu(namee);
+import java.io.File;
+import java.io.*;
+class file{
+    int rollno,marks;
+    String name, address,id;
+
+
+
+    public int  showmenu(){
+        System.out.println("MENU");
+        System.out.println("1.Display records");
+        System.out.println("2.Add record");
+        System.out.println("3.Delete a record");
+        System.out.println("4.Search a record");
+        System.out.println("5.Update a record");
+        System.out.println("6.Exit");
+        System.out.print("Please select a choice : ");
+        int ch;
+        Scanner sc= new Scanner(System.in);
+        ch = sc.nextInt();
+        return ch;
+
     }
-    public void readRecords(String namee) throws IOException{
+    String takerecord(){
+        Scanner sc= new Scanner(System.in);
+        String temp,add="";
+        int tempp;
+        System.out.print("Please enter your name : ");
+        temp = sc.next();
+        add+= temp;
+        add+=" ";
+        System.out.print("Please enter your id : ");
+        temp = sc.next();
+        add+= temp;
+        add+=" ";
+        System.out.print("Please enter your roll number : " );
+        temp = sc.next();
+        add+= temp;
+        add+=" ";
+        System.out.print("Please enter your marks : ");
+        temp = sc.next();
+        add+= temp;
+        add+=" ";
+        System.out.print("Please enter your address in one word : ");
+        temp = sc.next();
+        add+=temp;
+        add+=" ";
+        return add;
+    }
+
+    void addrecord(String add,String name){
         try{
-            BufferedReader file=new BufferedReader(new FileReader(namee));
-            String name;
-            int i=1;
-            while((name=file.readLine())!=null){
-                System.out.println(name);
-                System.out.println("");
-            }
-            file.close();
-            showMenu(namee);
+            PrintWriter pw = new PrintWriter(new BufferedWriter (new FileWriter(name, true)));
+            pw.println(add);
+            pw.close();
         }
-        catch(FileNotFoundException e){
-            System.out.println("ERROR : File Not Found !");
+        catch (Exception e){
+            System.out.println("Cannot write in the file");
         }
     }
-    public void searchRecords(String namee) throws IOException{
+
+    void display(String name) throws IOException {
+        BufferedReader readd = new BufferedReader(new FileReader(name));
+        String line="";
+        while((line= readd.readLine())!=null){
+            System.out.println(line);
+            System.out.println("");
+        }
+    }
+
+    void search(String name){
+        Scanner sc= new Scanner(System.in);
+        System.out.print("Please enter the roll number of a student you want search : ");
+        String key = sc.next();
+        Boolean flag=false;
         try{
-            BufferedReader file=new BufferedReader(new FileReader(namee));
-            String name;
-            int flag=0;
-            Scanner sc=new Scanner(System.in);
-            System.out.print("Enter Student's Roll No to search : ");
-            String searchroll=sc.next();
-            while((name=file.readLine())!=null){
-                String[] line=name.split(" ");
-                if(searchroll.equalsIgnoreCase(line[1])){
-                    System.out.println("Record Found !");
-                    System.out.println(name);
-                    System.out.println("");
-                    flag=1;
-                    break;
+            BufferedReader filee = new BufferedReader(new FileReader(name));
+            String line="";
+            while((line=filee.readLine())!=null){
+                String[] linee = line.split(" ");
+                if(Objects.equals(linee[2], key)){
+                    flag = true;
+                    System.out.println("The record is present");
+                    return;
                 }
+
             }
-            if(flag==0)
-                System.out.println("Record Not Found !");
-            file.close();
-            showMenu(namee);
+            if(flag ==false){
+                System.out.println("Record not found! ");
+            }
         }
-        catch(FileNotFoundException e){
-            System.out.println("ERROR : File Not Found !");
+        catch (Exception e){
+            System.out.println("Unable to locate file/ unable to read the file");
         }
     }
-    public void deleteRecords(String namee) throws IOException{
+
+    void delete(String name){
+        Scanner sc= new Scanner(System.in);
         try{
-            BufferedReader file1=new BufferedReader(new FileReader(namee));
-            PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter("temp.txt",true)));
-            String name;
-            int flag=0;
-            Scanner sc=new Scanner(System.in);
-            System.out.print("Enter Student's Roll no to delete : ");
-            String searchname=sc.next();
-            while((name=file1.readLine())!=null){
-                String[] line=name.split(" ");
-                if(!searchname.equalsIgnoreCase(line[2])){
-                    pw.println(name);
-                    flag=0;
+            BufferedReader file = new BufferedReader(new FileReader(name));
+            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("temp.txt")));
+            String line;
+            String[] linee;
+            boolean flag =false;
+            System.out.println("Please enter the roll number of student you want to delete");
+            String key = sc.next();
+            while((line=file.readLine())!=null){
+                linee = line.split(" ");
+                if(Objects.equals(linee[2], key)){
+                    flag =true;
                 }
                 else{
-                    System.out.println("Record Found !");
-                    flag=1;
+                    pw.println(line);
                 }
             }
-            file1.close();
             pw.close();
-            File delName=new File(namee);
-            File oldName=new File("temp.txt");
-            File newName=new File(namee);
-            if(delName.delete())
-                System.out.println("Record Deleted Successfully !");
-            else
-                System.out.println("Error !");
-            if(oldName.renameTo(newName));
-            else
-                System.out.println("Error !");
-            showMenu(namee);
-        }
-        catch(FileNotFoundException e){
-            System.out.println("ERROR : File Not Found !");
-        }
-    }
-    public void updateRecords(String namee) throws IOException{
-        try{
-            BufferedReader file1=new BufferedReader(new FileReader(namee));
-            PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter("temp.txt",true)));
-            String name;
-            int flag=0;
-            Scanner sc=new Scanner(System.in);
-            System.out.print("Enter Student's Roll number to update : ");
-            String searchname=sc.next();
-            while((name=file1.readLine())!=null){
-                String[] line=name.split(" ");
-                if(!searchname.equalsIgnoreCase(line[2])){
-                    pw.println(name);
-                    flag=0;
+            file.close();
+            if(flag){
+                PrintWriter pww = new PrintWriter(new BufferedWriter(new FileWriter(name)));
+                BufferedReader bf = new BufferedReader(new FileReader("temp.txt"));
+                String linne="";
+                while ((linne = bf.readLine())!=null){
+                    pww.println(linne);
                 }
-                else{
-                    System.out.println("Record Found !");
-                    System.out.print("Enter Updated Marks : ");
-                    marks=Float.parseFloat(br.readLine());
-                    pw.println(line[0]+" "+line[1]+" "+line[2]+" "+line[3]+" "+marks);
-                    flag=1;
-                }
+                pww.close();
+                bf.close();
             }
-            file1.close();
-            pw.close();
-            File delName=new File(namee);
-            File oldName=new File("temp.txt");
-            File newName=new File(namee);
-            if(delName.delete())
-                System.out.println("Record Updated Successfully !");
-            else
-                System.out.println("Error !");
-            if(oldName.renameTo(newName));
-            else
-                System.out.println("Error !");
-            showMenu(namee);
+            else{
+                System.out.println("The record not found!");
+            }
         }
-        catch(FileNotFoundException e){
-            System.out.println("ERROR : File Not Found !");
+        catch (Exception e){
+            System.out.println("File cannot be created");
         }
     }
-    public void clear(String filename) throws IOException{
-        PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(filename)));
-        pw.close();
-        System.out.println("All Records Cleared Successfully !");
-        int i=0;
-        while(i<999999999){
-            i++;
-        }
-        showMenu(filename);
-    }
-    public void showMenu(String name) throws IOException{
-        System.out.print("""
-                    Enter your choice : 
-                    1. Add Records
-                    2. Display Records
-                    3. Clear All Records
-                    4. Search Records
-                    5. Delete Records
-                    6. Update Records
-                    7. Exit
-                    """);
-        System.out.print("Select Choice : ");
-        int choice=Integer.parseInt(br.readLine());
-        switch(choice){
-            case 1 -> addRecords(name);
-            case 2 -> readRecords(name);
-            case 3 -> clear(name);
-            case 4 -> searchRecords(name);
-            case 5 -> deleteRecords(name);
-            case 6 -> updateRecords(name);
-            case 7 -> System.exit(0);
-            default -> System.out.println("Invalid Choice !");
-        }
-    }
-    public static void main(String[] args) throws IOException{
-        String name;
-        Scanner sc = new Scanner(System.in);
+
+};
+public class Main {
+    public static void main(String[] args) throws IOException {
         System.out.print("Please enter the name for the file : ");
-        name = sc.next();
-        name +=".txt";
-        Main call=new Main();
-        call.showMenu(name);
+        Scanner sc= new Scanner(System.in);
+        String name= sc.next();
+        name+=".txt";
+        FileWriter cinn =  new FileWriter(name);
+        cinn.close();
+        file call = new file();
+        System.out.print("Please enter the number of entries you want to enter in the file : ");
+        int n;
+        n = sc.nextInt();
+        for (int i=0;i<n;i++){
+            String add = call.takerecord();
+            call.addrecord(add,name);
+        }
+        while(true){
+            int ch =call.showmenu();
+            if(ch==1){
+                call.display(name);
+            }
+            if(ch==2){
+                String add = call.takerecord();
+                call.addrecord(add,name);
+            }
+            else if(ch==3){
+                call.delete(name);
+            }
+            else if(ch==4){
+                call.search(name);
+            }
+            else if(ch==6){
+                System.out.println("Exiting the code...");
+                break;
+            }
+        }
+
     }
 }
