@@ -1,18 +1,61 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 class node{
 public:
     char data;
-    node *left,*right;
+    node *left,*right,*next;
     node(char c){
         left = NULL;
         right = NULL;
+        next = NULL;
         data =c;
     }
     node(){
         left = NULL;
         right =NULL;
+        next= NULL;
     }
+};
+
+class stack{
+    public:
+    node* top;
+    
+    stack(){
+        top =NULL;
+    }
+
+    void push(node *data){
+        data->next = top;
+        top = data;
+    }
+    
+    node * pop(){
+        if(top==NULL){
+            cout << "The stack is empty!" << endl;
+        }
+        else{
+            node * temp = top;
+            top = top->next;
+            return temp;
+        }
+    }
+    
+    node *topp(){
+        if(top==NULL){
+            cout << "The stack is empty !" << endl;
+        }
+        return top;
+    }
+    
+    bool empty(){
+        if(top==NULL) return 1;
+        return 0;
+    }
+};
+
+class mytree{
+public:
     void inorder( node *root){
         if(root==NULL) return;
         inorder(root->left);
@@ -20,7 +63,7 @@ public:
         inorder(root->right);
     }
     void inordernonrecursive(node *root){
-        stack<node *> s;
+        stack s;
         node *curr = root;
         
         while (curr != NULL || !s.empty()){
@@ -28,18 +71,18 @@ public:
                 s.push(curr);
                 curr = curr->left;
             }
-            curr = s.top();
+            curr = s.topp();
             s.pop();
             cout << curr->data ;    
             curr = curr->right;  
         } 
     }
     void preordernonrecursive(node *root){
-        stack<node *>s;
+        stack s;
         s.push(root);
         while(!s.empty()){
-            node *curr = s.top();
-            cout << s.top()->data;
+            node *curr = s.topp();
+            cout << s.topp()->data;
             s.pop();
             if(curr->right){
                 s.push(curr->right);
@@ -50,10 +93,10 @@ public:
         }
     }
     void postordernonrecursive(node *root){
-        stack<node *>s;
+        stack s;
         s.push(root);
         while (!s.empty()) {
-        node * current_node = s.top();
+        node * current_node = s.topp();
         if (current_node->left) {
             s.push(current_node ->left);
             current_node -> left = NULL;
@@ -84,7 +127,7 @@ int main(){
     cout << "Please enter postfix expression : " ;
     string s;
     cin>>s;
-    stack<node *>tree;
+    stack tree;
     cout << endl;
     for(int i=0;i<s.size();i++){
         if(s[i]>=48){
@@ -93,38 +136,38 @@ int main(){
         }
         else{
             node *operation = new node(s[i]);
-            node *second = tree.top();
+            node *second = tree.topp();
             tree.pop();
-            node *first = tree.top();
+            node *first = tree.topp();
             tree.pop();
             operation->left = first;
             operation->right = second;
             tree.push(operation);
         }
     }
-    node call;
+    mytree call;
     cout << "Inorder expression (recursion) : ";
-    call.inorder(tree.top());
+    call.inorder(tree.topp());
     cout << endl;
     cout << endl;
     cout << "Postorder expression (recursion) : ";
-    call.postorder(tree.top());
+    call.postorder(tree.topp());
     cout << endl;
     cout << endl;
     cout << "Preorder expression (recursion) : ";
-    call.preorder(tree.top());
+    call.preorder(tree.topp());
     cout << endl;
     cout << endl;
     cout << "Inorder expression (non-recursive way) : ";
-    call.inordernonrecursive(tree.top());
+    call.inordernonrecursive(tree.topp());
     cout << endl;
     cout << endl;
     cout << "Preorder expression (non-recursive way) : ";
-    call.preordernonrecursive(tree.top());
+    call.preordernonrecursive(tree.topp());
     cout << endl;
     cout << endl;
     cout << "Postorder expression (non-recursive way) : ";
-    call.postordernonrecursive(tree.top());
+    call.postordernonrecursive(tree.topp());
     cout << endl;
     cout << endl;
 }
